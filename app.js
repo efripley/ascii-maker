@@ -25,17 +25,18 @@ function App(){
 	}
 
 	this.run = function(){
-		input.eval();
-		this.update();
-
-		world.draw(player.x, player.y);
-		player.draw();
-		display.puts(" FPS: " + frameRate.update() + " ", 0, 0, display.WHITE, display.BLACK);
-		display.puts(" LOC: " + player.x, 0, 1, display.WHITE, display.BLACK);
-
-		display.flip();
-
-		window.setTimeout(function(){app.run();}, 10);
+	  if(display.ready){
+		  input.eval();
+		  this.update();
+  
+		  world.draw(player.x, player.y);
+		  player.draw();
+		  display.puts(" FPS: " + frameRate.update() + " ", 0, 0, display.WHITE, display.BLACK);
+		  display.puts(" LOC: " + player.x, 0, 1, display.WHITE, display.BLACK);
+  
+		  display.flip();
+		}
+    window.setTimeout(function(){app.run();}, 10);
 	}
 }
 

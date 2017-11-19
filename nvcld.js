@@ -1,6 +1,6 @@
 //New Vec Digital Command Line Display
 //Version 1.0
-//Last Updated 11/3/2016
+//Last Updated 10/29/2016
 //
 //Creates an 80 x 25 ascii display using canvas and a bitmap font.
 //Provides functions for you to manage the display.
@@ -238,6 +238,31 @@ function NVCLD(container, font){
 		this.clear(0, 0, asciiWidth, asciiHeight);
 	}
 
+  this.initFonts = function(){
+	  fonts.push(document.getElementById(font));
+	  if(fonts[0].width == 0){
+  	  while(!fonts[0].complete){};
+  	}
+	  fonts[0].style.display = "none";
+
+    fonts.push(this.genFontColor(this.DARKGRAY));
+    fonts.push(this.genFontColor(this.LIGHTGRAY));
+    fonts.push(this.genFontColor(this.WHITE));
+    fonts.push(this.genFontColor(this.RED));
+    fonts.push(this.genFontColor(this.GREEN));
+    fonts.push(this.genFontColor(this.BLUE));
+    fonts.push(this.genFontColor(this.YELLOW));
+    fonts.push(this.genFontColor(this.CYAN));
+    fonts.push(this.genFontColor(this.MAGENTA));
+    fonts.push(this.genFontColor(this.DARKRED));
+    fonts.push(this.genFontColor(this.DARKGREEN));
+    fonts.push(this.genFontColor(this.DARKBLUE));
+    fonts.push(this.genFontColor(this.DARKYELLOW));
+    fonts.push(this.genFontColor(this.DARKCYAN));
+    fonts.push(this.genFontColor(this.DARKMAGENTA));
+    this.ready = true;
+  }
+
 	var canvas = document.createElement('canvas');
 	var context = canvas.getContext('2d');
 	var charHeight = 16;
@@ -249,6 +274,7 @@ function NVCLD(container, font){
 
 	document.getElementById(container).appendChild(canvas);
 
+  this.ready = false;
 	this.BLACK = 0;
 	this.DARKGRAY = 1;
 	this.LIGHTGRAY = 2;
@@ -267,30 +293,13 @@ function NVCLD(container, font){
 	this.DARKMAGENTA = 15;
 
   var fonts = [];
-	fonts.push(document.getElementById(font));
-	fonts[0].style.display = "none";
-	while(!fonts[0].complete){};
 
-  fonts.push(this.genFontColor(this.DARKGRAY));
-  fonts.push(this.genFontColor(this.LIGHTGRAY));
-  fonts.push(this.genFontColor(this.WHITE));
-  fonts.push(this.genFontColor(this.RED));
-  fonts.push(this.genFontColor(this.GREEN));
-  fonts.push(this.genFontColor(this.BLUE));
-  fonts.push(this.genFontColor(this.YELLOW));
-  fonts.push(this.genFontColor(this.CYAN));
-  fonts.push(this.genFontColor(this.MAGENTA));
-  fonts.push(this.genFontColor(this.DARKRED));
-  fonts.push(this.genFontColor(this.DARKGREEN));
-  fonts.push(this.genFontColor(this.DARKBLUE));
-  fonts.push(this.genFontColor(this.DARKYELLOW));
-  fonts.push(this.genFontColor(this.DARKCYAN));
-  fonts.push(this.genFontColor(this.DARKMAGENTA));
 
 
 	backBuffer = new nvArray2D(asciiWidth, asciiHeight, null);
 	frontBuffer = new nvArray2D(asciiWidth, asciiHeight, null);
 
+ 	this.initFonts();
  	this.initBuffers();
 	this.initDisplay();
 
