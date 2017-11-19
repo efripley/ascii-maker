@@ -1,0 +1,10 @@
+body{
+	margin: 0;
+	text-align: center;
+}
+.display-cmp canvas{
+	border: 10px solid #888;
+	border-radius: 10px;
+	padding: 10px;
+	background-color: #000;
+}
