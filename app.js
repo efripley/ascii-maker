@@ -5,6 +5,7 @@ function App(){
 	var logicTime = new Date().getTime();
 	
 	world.init();
+	display.initFonts();
 	player.registerInput();
 	player.initInventory();
 	
@@ -27,13 +28,13 @@ function App(){
 	this.run = function(){
 	  if(display.ready){
 		  input.eval();
-		  this.update();
-  
+		  app.update();
+
 		  world.draw(player.x, player.y);
 		  player.draw();
 		  display.puts(" FPS: " + frameRate.update() + " ", 0, 0, display.WHITE, display.BLACK);
 		  display.puts(" LOC: " + player.x, 0, 1, display.WHITE, display.BLACK);
-  
+
 		  display.flip();
 		}
     window.setTimeout(function(){app.run();}, 10);
@@ -58,10 +59,10 @@ frameRate = new function(){
   }
 }
 
-var display = new NVCLD("display1", "font");
+var display = new NVCLD("display1", "font.png");
 var input = new NVIn();
 var tiles = new Tiles();
 var world = new World();
 var player = new Player();
 var app = new App();
-app.run();
+setTimeout(app.run, 3000);

@@ -8,6 +8,7 @@
 
 function NVCLD(container, font){
   this.genFontColor = function(color){
+    console.log('generating font', color);
     var red = 0;
     var green = 0;
     var blue = 0;
@@ -115,6 +116,7 @@ function NVCLD(container, font){
   }
 
 	this.initBuffers = function(){
+	  console.log('initializing buffers');
 		for(var ay = 0; ay < asciiHeight; ay++){
 			for(var ax = 0; ax < asciiWidth; ax++){
 				frontBuffer[ax][ay] = {char:32, color:this.WHITE, back:this.BLACK};
@@ -124,6 +126,7 @@ function NVCLD(container, font){
 	}
 
 	this.initDisplay = function(){
+	  console.log('initializing display');
 		for(var ay = 0; ay < asciiHeight; ay++){
 			for(var ax = 0; ax < asciiWidth; ax++){
 				var x = ax * charWidth;
@@ -239,27 +242,36 @@ function NVCLD(container, font){
 	}
 
   this.initFonts = function(){
-	  fonts.push(document.getElementById(font));
-	  if(fonts[0].width == 0){
-  	  while(!fonts[0].complete){};
-  	}
-	  fonts[0].style.display = "none";
+	  fonts[0] = new Image();
+	  console.log('init fonts', Date.now());
+	  fonts[0].onload = function(){
+	    console.log('generating all fonts', Date.now());
+      fonts.push(display.genFontColor(display.DARKGRAY));
+      fonts.push(display.genFontColor(display.LIGHTGRAY));
+      fonts.push(display.genFontColor(display.WHITE));
+      fonts.push(display.genFontColor(display.RED));
+      fonts.push(display.genFontColor(display.GREEN));
+      fonts.push(display.genFontColor(display.BLUE));
+      fonts.push(display.genFontColor(display.YELLOW));
+      fonts.push(display.genFontColor(display.CYAN));
+      fonts.push(display.genFontColor(display.MAGENTA));
+      fonts.push(display.genFontColor(display.DARKRED));
+      fonts.push(display.genFontColor(display.DARKGREEN));
+      fonts.push(display.genFontColor(display.DARKBLUE));
+      fonts.push(display.genFontColor(display.DARKYELLOW));
+      fonts.push(display.genFontColor(display.DARKCYAN));
+      fonts.push(display.genFontColor(display.DARKMAGENTA));
+      for(var a = 1; a < fonts.length; a++)
+        document.getElementsByClassName('media-cmp')[0].appendChild(fonts[a]);
+      display.initBuffers();
+     	display.initDisplay();
+      display.ready = true;;
+    }
+    fonts[0].src = font;
+    document.getElementsByClassName('media-cmp')[0].appendChild(fonts[0]);
+  }
 
-    fonts.push(this.genFontColor(this.DARKGRAY));
-    fonts.push(this.genFontColor(this.LIGHTGRAY));
-    fonts.push(this.genFontColor(this.WHITE));
-    fonts.push(this.genFontColor(this.RED));
-    fonts.push(this.genFontColor(this.GREEN));
-    fonts.push(this.genFontColor(this.BLUE));
-    fonts.push(this.genFontColor(this.YELLOW));
-    fonts.push(this.genFontColor(this.CYAN));
-    fonts.push(this.genFontColor(this.MAGENTA));
-    fonts.push(this.genFontColor(this.DARKRED));
-    fonts.push(this.genFontColor(this.DARKGREEN));
-    fonts.push(this.genFontColor(this.DARKBLUE));
-    fonts.push(this.genFontColor(this.DARKYELLOW));
-    fonts.push(this.genFontColor(this.DARKCYAN));
-    fonts.push(this.genFontColor(this.DARKMAGENTA));
+  var readyDisplay = function(){
     this.ready = true;
   }
 
@@ -298,9 +310,4 @@ function NVCLD(container, font){
 
 	backBuffer = new nvArray2D(asciiWidth, asciiHeight, null);
 	frontBuffer = new nvArray2D(asciiWidth, asciiHeight, null);
-
- 	this.initFonts();
- 	this.initBuffers();
-	this.initDisplay();
-
 }
